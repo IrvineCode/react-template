@@ -1,0 +1,15 @@
+.AddForm {
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+}
+
+.AddForm * {
+    font-size: 20px;
+}
+
+.AddForm input {
+    flex-grow: 1;
+}

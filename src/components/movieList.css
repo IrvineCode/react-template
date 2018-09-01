@@ -1,0 +1,14 @@
+.MovieList {
+
+}
+
+.Movie {
+    border-bottom: 1px solid dodgerblue;
+    padding: 10px;
+    display: flex;
+    font-size: 20px;
+}
+
+.Movie > div:first-child {
+    flex-grow: 1;
+}
