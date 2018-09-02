@@ -1,64 +1,49 @@
 import React, { Component } from 'react';
 import './App.css';
-import { listMovies } from './utils/db';
-import { Loading } from './components/loading';
-import { MovieList, Movie } from './components/movieList';
-import { AddForm } from './components/addForm';
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import Main from './components/Main';
+
+const Nav = () => {
+  return (
+    <nav>
+      <Link to="/">home</Link>
+      &nbsp;
+      &nbsp;
+      <Link to="/tos">tos</Link>
+      &nbsp;
+      &nbsp;
+      <Link to="/signup">signup</Link>
+    </nav>
+  )
+}
+
+const TOS = () => {
+  return (
+    <div>TOS page</div>
+  )
+}
+
+const SignUp = () => {
+  return (
+    <div>
+      <h1>sign up</h1>
+    </div>
+  )
+}
 
 class App extends Component {
-	constructor() {
-		super();
-
-		this.state = {
-			movies: []
-    };
-	}
-	componentDidMount() {
-		listMovies().then((movies) => {
-			this.setState({
-				movies: movies
-			});
-		});
+  render() {
+    return (
+      <Router>
+        <div>
+          <Nav />
+          <Route exact path="/" component={Main} />
+          <Route path="/tos" component={TOS} />
+          <Route path="/signup" component={SignUp} />
+        </div>
+      </Router>
+    )
   }
-  upvote(id, isUp = true) {
-    let movies = [...this.state.movies];
-    movies.forEach((movie) => {
-      if (movie.id === id) {
-        if (isUp) movie.up++;
-        else movie.down++;
-      }
-    });
-
-    this.setState({ movies: movies });
-  }
-  addMovie(name) {
-    let movie = {
-      id: this.state.movies.length + 1,
-      name: name,
-      up: 0,
-      down: 0
-    };
-    this.setState({
-      movies: [...this.state.movies, movie]
-    })
-  }
-	render() {
-		return (
-			<div>
-        <h1>Featured...</h1>
-        { 
-          this.state.movies.length > 0 && 
-          <Movie movie={this.state.movies[0]} upvote={this.upvote.bind(this)} />
-        }
-
-				<h1>Reviews...</h1>
-				{this.state.movies.length === 0 && <Loading />}
-				<MovieList movies={this.state.movies} upvote={this.upvote.bind(this)} />
-
-        <AddForm addMovie={this.addMovie.bind(this)} />
-			</div>
-		);
-	}
 }
 
 export default App;
